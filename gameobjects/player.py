@@ -9,6 +9,10 @@ inputState = inputstate.getInstance()
 from gameobjects.gameobject import GameObject
 
 
+# Basis plaatje van de player.
+imageBase = pygame.image.load(os.path.join(".", "data", "tiles", "player.png"))
+
+
 class Player(GameObject):
 	"""Object voor de player in een level.
 		
@@ -21,7 +25,7 @@ class Player(GameObject):
 		self.level = level
 		
 		# De image.
-		self.image = pygame.image.load(os.path.join(".", "data", "tiles", "player.png"))#.convert()
+		self.image = imageBase.copy()
 
 		# De rect van de player.
 		initialX = 1*settings.TILE_WIDTH
@@ -39,7 +43,24 @@ class Player(GameObject):
 		self.jumping = False
 		
 	def update(self):
-		"""Update de positie etc. van de player.
+		"""Update de player.
+		"""
+		self.updatePosition()
+		self.updateImage()
+		
+	def updateImage(self):
+		"""Update de image van de player.
+		"""
+		# Als je naar links loopt het basis plaatje flippen.
+		if self.velocityX < 0:
+			self.image = pygame.transform.flip(imageBase, True, False)
+
+		# Als je naar rechts loopt het basis plaatje zoals hij normaal is.		
+		elif self.velocityX > 0:
+			self.image = imageBase.copy()
+	
+	def updatePosition(self):
+		"""Update de position van de player.
 		"""
 		
 		# Check of de gebruiker een jump heeft onderbroken.
