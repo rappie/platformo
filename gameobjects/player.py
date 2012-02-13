@@ -10,7 +10,9 @@ from gameobjects.gameobject import GameObject
 
 
 # Basis plaatje van de player.
-imageBase = pygame.image.load(os.path.join(".", "data", "tiles", "player.png"))
+imageStand = pygame.image.load(os.path.join(".", "data", "tiles", "player_stand.png"))
+imageJump = pygame.image.load(os.path.join(".", "data", "tiles", "player_jump.png"))
+imageWalk = pygame.image.load(os.path.join(".", "data", "tiles", "player_walk01.png"))
 
 
 class Player(GameObject):
@@ -25,7 +27,7 @@ class Player(GameObject):
 		self.level = level
 		
 		# De image.
-		self.image = imageBase.copy()
+		self.image = imageStand.copy()
 
 		# De rect van de player.
 		initialX = 1*settings.TILE_WIDTH
@@ -51,13 +53,21 @@ class Player(GameObject):
 	def updateImage(self):
 		"""Update de image van de player.
 		"""
+		# Als je springt.
+		if self.onGround == False:
+			self.image = imageJump.copy()
+			
 		# Als je naar links loopt het basis plaatje flippen.
-		if self.velocityX < 0:
-			self.image = pygame.transform.flip(imageBase, True, False)
+		elif self.velocityX < 0:
+			self.image = pygame.transform.flip(imageWalk, True, False)
 
 		# Als je naar rechts loopt het basis plaatje zoals hij normaal is.		
 		elif self.velocityX > 0:
-			self.image = imageBase.copy()
+			self.image = imageWalk.copy()
+		
+		# Als je stilstaat.
+		elif self.velocityX == 0:
+			self.image = imageStand.copy()
 	
 	def updatePosition(self):
 		"""Update de position van de player.
