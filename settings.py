@@ -56,6 +56,10 @@ MAX_FPS = 100
 TILE_WIDTH = 32
 TILE_HEIGHT = 32
 
+# Grootte van de player.
+PLAYER_WIDTH = 26
+PLAYER_HEIGHT = 26
+
 # Grootte van cluster blocks.
 #
 # Dit bepaalt de grootte van de nodes in de 'onderste laag' in de cluster tree.

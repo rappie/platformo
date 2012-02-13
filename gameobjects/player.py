@@ -30,7 +30,7 @@ class Player(GameObject):
 		# De rect van de player.
 		initialX = 1*settings.TILE_WIDTH
 		initialY = (settings.LEVEL_HEIGHT-2)*settings.TILE_HEIGHT
-		self.rect = pygame.Rect(initialX, initialY, settings.TILE_WIDTH, settings.TILE_HEIGHT)
+		self.rect = pygame.Rect(initialX, initialY, settings.PLAYER_WIDTH, settings.PLAYER_HEIGHT)
 		
 		# De snelheid.
 		self.velocityX = 0
