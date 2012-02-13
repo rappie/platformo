@@ -1,3 +1,4 @@
+import os
 import pygame
 
 import settings
@@ -18,9 +19,14 @@ class Player(GameObject):
 	def __init__(self, level):
 		GameObject.__init__(self)
 		self.level = level
+		
+		# De image.
+		self.image = pygame.image.load(os.path.join(".", "data", "tiles", "player.png"))#.convert()
 
 		# De rect van de player.
-		self.rect = pygame.Rect(1*settings.TILE_WIDTH, (settings.LEVEL_HEIGHT-2)*settings.TILE_HEIGHT, settings.TILE_WIDTH, settings.TILE_HEIGHT)
+		initialX = 1*settings.TILE_WIDTH
+		initialY = (settings.LEVEL_HEIGHT-2)*settings.TILE_HEIGHT
+		self.rect = pygame.Rect(initialX, initialY, settings.TILE_WIDTH, settings.TILE_HEIGHT)
 		
 		# De snelheid.
 		self.velocityX = 0

@@ -14,17 +14,13 @@ class Drawer(object):
 		# Maak font aan voor tekenen van de FPS.
 		self.font = pygame.font.Font(None, 20)
 		
-		# Lees de images in.
-		self.playerImage = pygame.image.load(os.path.join(".", "data", "tiles", "player.png"))#.convert()
-		self.brickImage = pygame.image.load(os.path.join(".", "data", "tiles", "brick.png"))#.convert()
-		
 		# View rect.
 		self.view = self.game.getScreen().get_rect()
 	
 	def update(self):
 		"""Update de positie van de view.
 		"""
-		playerRect = self.game.getCurrentLevel().getPlayer().getRect()
+		playerRect = self.game.getCurrentLevel().getPlayer().rect
 		self.view.center = playerRect.center
 		
 	def draw(self):
@@ -44,12 +40,12 @@ class Drawer(object):
 			# Teken hem als hij in beeld is.
 			if self.view.colliderect(brick) == True:
 				relativeBrickRect = brick.rect.move((-self.view.left, -self.view.top))
-				screen.blit(self.brickImage, relativeBrickRect)
+				screen.blit(brick.image, relativeBrickRect)
 
 		# Teken de player.
-		playerRect = level.getPlayer().getRect()
-		relativePlayerRect = playerRect.move((-self.view.left, -self.view.top))
-		screen.blit(self.playerImage, relativePlayerRect)
+		player = level.getPlayer()
+		relativePlayerRect = player.rect.move((-self.view.left, -self.view.top))
+		screen.blit(player.image, relativePlayerRect)
 
 		# Teken de fps.
 		text = self.font.render("%0.4f" % self.game.getClock().get_fps(), False, (255, 255, 255))
