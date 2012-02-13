@@ -1,0 +1,17 @@
+
+
+nu
+
+
+later
+* character kleiner maken dan 32 x 32
+* kijken naar het .convert() gedeelte van de images
+* fps counter afhankelijk van keybinding oid maken
+
+
+features
+* geluid
+* animaties
+* menu enzo
+* savegame support
+
