@@ -9,10 +9,14 @@ inputState = inputstate.getInstance()
 from gameobjects.gameobject import GameObject
 
 
-# Basis plaatje van de player.
+# Plaatjes van de player.
 imageStand = pygame.image.load(os.path.join(".", "data", "tiles", "player_stand.png"))
 imageJump = pygame.image.load(os.path.join(".", "data", "tiles", "player_jump.png"))
-imageWalk = pygame.image.load(os.path.join(".", "data", "tiles", "player_walk01.png"))
+walkImageList = []
+walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk01.png")))
+walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk02.png")))
+walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk03.png")))
+walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk04.png")))
 
 
 class Player(GameObject):
@@ -28,6 +32,12 @@ class Player(GameObject):
 		
 		# De image.
 		self.image = imageStand.copy()
+		
+		# De huidige frame van een animatie waar de character in zit.
+		self.animationFrame = 0
+		
+		# Laatste tick wanneer de animatie is geupdate.
+		self.lastAnimationUpdate = 0
 
 		# De rect van de player.
 		initialX = 1*settings.TILE_WIDTH
@@ -56,14 +66,32 @@ class Player(GameObject):
 		# Als je springt.
 		if self.onGround == False:
 			self.image = imageJump.copy()
-			
-		# Als je naar links loopt het basis plaatje flippen.
-		elif self.velocityX < 0:
-			self.image = pygame.transform.flip(imageWalk, True, False)
 
-		# Als je naar rechts loopt het basis plaatje zoals hij normaal is.		
-		elif self.velocityX > 0:
-			self.image = imageWalk.copy()
+		# Movement naar links of rechts.
+		elif self.velocityX != 0:
+			
+			# Haal ticks op.
+			ticks = pygame.time.get_ticks()
+
+			# Check of er een nieuwe frame getoond moet worden.
+			if ticks - self.lastAnimationUpdate > settings.PLAYER_ANIMATION_SPEED:
+				self.animationFrame += 1
+				self.lastAnimationUpdate = ticks
+			
+			# Check of de nieuwe frame binnen de bounds van de image list past.
+			if self.animationFrame >= len(walkImageList):
+				self.animationFrame = 0
+
+			# Haal frame op.
+			walkImage = walkImageList[self.animationFrame]
+
+			# Naar rechts lopen. Neem plaatje zoals hij is.
+			if self.velocityX > 0:
+				self.image = walkImage.copy()
+				
+			# Naar links lopen. Flip het plaatje.
+			elif self.velocityX < 0:
+				self.image = pygame.transform.flip(walkImage, True, False)
 		
 		# Als je stilstaat.
 		elif self.velocityX == 0:

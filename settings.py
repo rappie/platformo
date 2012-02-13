@@ -52,6 +52,14 @@ LEVEL_HEIGHT = 512
 #
 MAX_FPS = 100
 
+
+# Speed van de player animations.
+#
+# Deze variabele bepaalt hoeveel miliseconden een player animation frame duurt.
+#
+PLAYER_ANIMATION_SPEED = 200
+
+
 # Grootte van de tiles in een level.
 TILE_WIDTH = 32
 TILE_HEIGHT = 32
