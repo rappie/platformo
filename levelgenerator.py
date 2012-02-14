@@ -31,7 +31,7 @@ def generateLevelMap():
 				levelMap[y][x] = 1
 			
 			# Random blokjes.
-			if random.random() > 0.9:
+			if random.random() > 0.95:
 				levelMap[y][x] = 1
 	
 	# Plek vrijmaken voor de player.

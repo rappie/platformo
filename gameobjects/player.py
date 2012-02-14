@@ -18,6 +18,11 @@ walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "playe
 walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk03.png")))
 walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk04.png")))
 
+# Geluiden.
+soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
+soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
+soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
+soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
 
 class Player(GameObject):
 	"""Object voor de player in een level.
@@ -53,6 +58,13 @@ class Player(GameObject):
 		
 		# Variabele die bepaalt of je aan het springen bent.
 		self.jumping = False
+		
+		# Variabele die bepaalt of je aan het vallen bent.
+		#
+		# Vallen betekent dat je je op maxspeed naar beneden beweegt en dat je
+		# fall damage moet krijgen.
+		#
+		self.falling = False
 		
 	def update(self):
 		"""Update de player.
@@ -118,8 +130,12 @@ class Player(GameObject):
 				# Je kan alleen springen als je op de grond staat.
 				if self.onGround == True:
 					
+					# Update speed en enable jumpen.
 					self.velocityY = settings.PLAYER_JUMP_SPEED
 					self.jumping = True
+					
+					# Speel jump geluid af.
+					soundJump.play()
 		
 		# Naar rechts lopen.
 		if inputState.getMovementState("right") == True:
@@ -155,6 +171,12 @@ class Player(GameObject):
 		if self.velocityY < -settings.PLAYER_MAX_SPEED_VERTICAL:
 			self.velocityY = -settings.PLAYER_MAX_SPEED_VERTICAL
 
+		# Bepaal of je aan het vallen bent.
+		if self.velocityY >= settings.PLAYER_MAX_SPEED_VERTICAL:
+			if self.oldVelocityY < settings.PLAYER_MAX_SPEED_VERTICAL:
+				soundScream.play()
+			self.falling = True
+			
 		# Move eerst verticaal.
 		self.collideVertical()
 		self.rect = self.rect.move((0, self.velocityY))
@@ -162,6 +184,13 @@ class Player(GameObject):
 		# Move daarna horizontaal.
 		self.collideHorizontal()
 		self.rect = self.rect.move((self.velocityX, 0))
+		
+		# Sla de snelheid/positie op zodat de volgende frame dit zou kunnen
+		# gebruiken.
+		#
+		self.oldVelocityX = self.velocityX
+		self.oldVelocityY = self.velocityY
+		self.oldRect = self.rect.copy()
 
 	def collideVertical(self):
 		"""Voer collision detection uit voor de verticale as.
@@ -179,9 +208,29 @@ class Player(GameObject):
 				
 				# Als je naar beneden moved.
 				if self.velocityY > 0:
+					
+					# Pas de speed aan.
 					self.velocityY = brick.rect.top - self.rect.bottom
-					self.onGround = True
-					self.jumping = False
+					
+					# Als de aangepaste speed nul is betekent het dat je op de
+					# grond staat.
+					#
+					if not self.velocityY > 0:
+
+						# Als dit de eerste frame is dat je op de grond staat
+						# moet er een geluid worden afgespeeld.
+						#
+						if self.oldVelocityY > 0:
+							
+							if self.falling == False:
+								soundLand.play()
+							else:
+								soundCrash.play()
+
+						# Update alle statussen.
+						self.onGround = True
+						self.jumping = False
+						self.falling = False
 					
 				# Als je naar boven moved.
 				elif self.velocityY < 0:
