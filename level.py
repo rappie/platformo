@@ -45,12 +45,12 @@ class Level(object):
 				tile = self.levelMap[y][x]
 
 				# Voeg een brick toe.
-				if tile == 1:
+				if 1 in tile:
 					brick = Brick((posX, posY))
 					self.gameObjectList.append(brick)
 
 				# Voeg een coin toe.
-				if tile == 2:
+				if 2 in tile:
 					coin = Coin((posX, posY))
 					self.gameObjectList.append(coin)
 
