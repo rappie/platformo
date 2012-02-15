@@ -32,21 +32,25 @@ class Drawer(object):
 		# Maak het scherm zwart.
 		screen.fill((0, 0, 0))
 		
-		# Ga alle bricks bij langs.
-		#for gameObject in level.cluster.getGameObjectList(level.getPlayer().getClusterCollisionRect()):
-		#for gameObject in level.cluster.getGameObjectList(level.getPlayer().getRect()):
-		for gameObject in level.cluster.getGameObjectList(self.view):
+		# Lijst waar alle game objects in komen die we dit frame gaan tekenen.
+		gameObjectList = []
+		
+		# Voeg alle game objects in de huidige clusters toe.
+		#gameObjectList += level.cluster.getGameObjectList(level.getPlayer().getClusterCollisionRect())
+		#gameObjectList += level.cluster.getGameObjectList(level.getPlayer().getRect())
+		gameObjectList += level.cluster.getGameObjectList(self.view)
+		
+		# Voeg de player toe.
+		gameObjectList.append(level.getPlayer())
+		
+		# Ga de game objects bij langs.
+		for gameObject in gameObjectList:
 			
 			# Bepaal de relatieve positie van het game object.
 			relativeRect = gameObject.rect.move((-self.view.left, -self.view.top))
 			
 			# Teken het game object.
 			screen.blit(gameObject.image, relativeRect)
-
-		# Teken de player.
-		player = level.getPlayer()
-		relativePlayerRect = player.rect.move((-self.view.left, -self.view.top))
-		screen.blit(player.image, relativePlayerRect)
 
 		# Teken de fps.
 		text = self.font.render("%0.4f" % self.game.getClock().get_fps(), False, (255, 255, 255))
