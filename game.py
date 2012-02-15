@@ -8,7 +8,7 @@ inputState = inputstate.getInstance()
 
 from gameobjects.player import Player
 from level import Level
-from drawer import Drawer
+from camera import Camera
 
 
 class Game(object):
@@ -35,7 +35,7 @@ class Game(object):
 		self.clock = pygame.time.Clock()
 	
 		# Maak drawer object aan.
-		self.drawer = Drawer(self)
+		self.camera = Camera(self)
 
 	
 	def run(self):
@@ -55,10 +55,10 @@ class Game(object):
 			self.player.update()
 			
 			# Update de drawer omdat de positie van de player veranderd kan zijn.
-			self.drawer.update()
+			self.camera.update()
 					
 			# Teken het level opnieuw.
-			self.drawer.draw()
+			self.camera.draw()
 			
 			# Wissel de buffers.
 			pygame.display.flip()

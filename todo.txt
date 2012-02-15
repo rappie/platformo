@@ -21,6 +21,7 @@ features
 * coins & score
 * monsters & health
 * iets om het uit te spelen
+* mooiere background
 * menu enzo
 * savegame support
 * multiplayer support

@@ -2,10 +2,10 @@ import os
 import pygame
 
 
-class Drawer(object):
-	"""Drawer klasse.
+class Camera(object):
+	"""Camera klasse.
 	
-		Deze houdt het level bij en tekent elke turn het level opnieuw.
+		Deze houdt het level bij en tekent elk frame het level opnieuw.
 	"""
 	
 	def __init__(self, game):
