@@ -3,6 +3,10 @@ import random
 import settings
 
 
+# Variabelen voor objecten in de level map.
+BRICK = 1
+COIN = 2
+
 
 # Check level dimensies.
 #
@@ -31,15 +35,15 @@ def generateLevelMap():
 			
 			# Random blokjes.
 			if random.random() > 0.90:
-				tile.append(1)
+				tile.append(BRICK)
 
 			# Random coins.
 			if random.random() > 0.99:
-				tile.append(2)
+				tile.append(COIN)
 
 			# Rand eromheen.
 			if x == 0 or x == settings.LEVEL_WIDTH-1 or y == 0 or y == settings.LEVEL_HEIGHT-1:
-				levelMap[y][x] = [1]
+				levelMap[y][x] = [BRICK]
 	
 	# Plek vrijmaken voor de player.
 	levelMap[-2][1] = []

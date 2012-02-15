@@ -9,6 +9,12 @@ from gameobjects.brick import Brick
 from gameobjects.coin import Coin
 
 
+# Map van levelmap-id naar klasse voor game object.
+ID_TO_OBJECT_CLASS = {}
+ID_TO_OBJECT_CLASS[levelgenerator.BRICK] = Brick
+ID_TO_OBJECT_CLASS[levelgenerator.COIN] = Coin
+
+
 class Level(object):
 	"""Object voor een level.
 		
@@ -43,16 +49,16 @@ class Level(object):
 
 				# Haal tile op.
 				tile = self.levelMap[y][x]
-
-				# Voeg een brick toe.
-				if 1 in tile:
-					brick = Brick((posX, posY))
-					self.gameObjectList.append(brick)
-
-				# Voeg een coin toe.
-				if 2 in tile:
-					coin = Coin((posX, posY))
-					self.gameObjectList.append(coin)
+				
+				# Loop door alle game object id's in de tile heen.
+				for gameObjectId in tile:
+					
+					# Bepaal de class van het game object.
+					gameObjectClass = ID_TO_OBJECT_CLASS[gameObjectId]
+					
+					# Maak aan en zet in de lijst.
+					gameObject = gameObjectClass((posX, posY))
+					self.gameObjectList.append(gameObject)
 
 		# Maak cluster aan.
 		self.cluster = Cluster(self, None, self.getRect())
