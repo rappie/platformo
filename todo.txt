@@ -4,14 +4,15 @@ nu
 
 
 later
-* character kleiner maken dan 32 x 32
 * kijken naar het .convert() gedeelte van de images
 * fps counter afhankelijk van keybinding oid maken
 
 
 features
-* geluid
-* animaties
+* coins & score
+* monsters & health
+* iets om het uit te spelen
 * menu enzo
 * savegame support
+* multiplayer support
 
