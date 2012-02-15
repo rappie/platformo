@@ -6,6 +6,9 @@ import settings
 from gameobjects.gameobject import GameObject
 
 
+# Lees geluiden in.
+soundCoin = pygame.mixer.Sound(os.path.join(".", "data", "sound", "coin.wav"))
+
 # Maak de image hier aan zodat hij maar 1x wordt ingelezen.
 brickImage = pygame.image.load(os.path.join(".", "data", "tiles", "coin.png"))
 
@@ -26,6 +29,7 @@ class Coin(GameObject):
 	def collision(self):
 		"""Verwijder de coin.
 		"""
+		soundCoin.play()
 		self.remove()
 		
 	def collideVertical(self, gameObject):
