@@ -33,14 +33,15 @@ class Drawer(object):
 		screen.fill((0, 0, 0))
 		
 		# Ga alle bricks bij langs.
-		#for brick in level.cluster.getGameObjectList(level.getPlayer().getClusterCollisionRect()):
-		#for brick in level.cluster.getGameObjectList(level.getPlayer().getRect()):
-		for brick in level.cluster.getGameObjectList(self.view):
+		#for gameObject in level.cluster.getGameObjectList(level.getPlayer().getClusterCollisionRect()):
+		#for gameObject in level.cluster.getGameObjectList(level.getPlayer().getRect()):
+		for gameObject in level.cluster.getGameObjectList(self.view):
 			
-			# Teken hem als hij in beeld is.
-			if self.view.colliderect(brick) == True:
-				relativeBrickRect = brick.rect.move((-self.view.left, -self.view.top))
-				screen.blit(brick.image, relativeBrickRect)
+			# Bepaal de relatieve positie van het game object.
+			relativeRect = gameObject.rect.move((-self.view.left, -self.view.top))
+			
+			# Teken het game object.
+			screen.blit(gameObject.image, relativeRect)
 
 		# Teken de player.
 		player = level.getPlayer()

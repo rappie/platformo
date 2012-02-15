@@ -83,7 +83,7 @@ class Cluster(Node):
 		# gebruikt.
 		#
 		if self.parent == None:
-			parentGameObjectList = self.level.getBrickList()
+			parentGameObjectList = self.level.getGameObjectList()
 		else:
 			parentGameObjectList = self.parent.getContainedGameObjects()
 

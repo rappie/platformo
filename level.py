@@ -6,6 +6,7 @@ import levelgenerator
 
 from cluster import Cluster
 from gameobjects.brick import Brick
+from gameobjects.coin import Coin
 
 
 class Level(object):
@@ -20,8 +21,8 @@ class Level(object):
 		# Player object.
 		self.player = None
 		
-		# Lijst met alle bricks.
-		self.brickList = []
+		# Lijst met alle game objects.
+		self.gameObjectList = []
 		
 		# Maak een level aan.
 		self.levelMap = levelgenerator.generateLevelMap()
@@ -29,7 +30,7 @@ class Level(object):
 		# Bepaal de rect van het gehele level.
 		self.rect = pygame.Rect(0, 0, settings.TILE_WIDTH*settings.LEVEL_WIDTH, settings.TILE_HEIGHT*settings.LEVEL_HEIGHT)
 		
-		# Vul de brick list aan de hand van de level map.
+		# Vul de game object list aan de hand van de level map.
 		#
 		# Loop door alle tiles heen.
 		#
@@ -39,20 +40,27 @@ class Level(object):
 				# Bepaal de x/y positie.
 				posX = x * settings.TILE_WIDTH
 				posY = y * settings.TILE_HEIGHT
-				
-				# Voeg een brick toe.
+
+				# Haal tile op.
 				tile = self.levelMap[y][x]
+
+				# Voeg een brick toe.
 				if tile == 1:
 					brick = Brick((posX, posY))
-					self.brickList.append(brick)
+					self.gameObjectList.append(brick)
+
+				# Voeg een coin toe.
+				if tile == 2:
+					coin = Coin((posX, posY))
+					self.gameObjectList.append(coin)
 
 		# Maak cluster aan.
 		self.cluster = Cluster(self, None, self.getRect())
 					
-	def getBrickList(self):
-		"""Return lijst met alle bricks in het level.
+	def getGameObjectList(self):
+		"""Return lijst met alle game objects.
 		"""
-		return self.brickList
+		return self.gameObjectList
 	
 	def getPlayer(self):
 		"""Return het player object.

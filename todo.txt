@@ -3,6 +3,15 @@
 nu
 
 
+refactor
+* player toevoegen aan object list en mee tekenen in de drawer
+* drawer hernoemen naar camera
+* levelgenerator moet per tile een lijst hebben met objecten zodat er meer dan 1 in kan zitten
+* generiekere manier van het Level vullen met game objects ipv met ifjes
+* collision detection verplaatsen naar game objects?
+* kijken of er iets in GameObject kan, bijvoorbeeld het aanmaken van de rect ofzo
+
+
 later
 * kijken naar het .convert() gedeelte van de images
 * fps counter afhankelijk van keybinding oid maken

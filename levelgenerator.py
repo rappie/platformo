@@ -26,12 +26,16 @@ def generateLevelMap():
 	for y in xrange(len(levelMap)):
 		for x in xrange(len(levelMap[0])):
 			
+			# Random blokjes.
+			if random.random() > 0.90:
+				levelMap[y][x] = 1
+
+			# Random coins.
+			if random.random() > 0.99:
+				levelMap[y][x] = 2
+
 			# Rand eromheen.
 			if x == 0 or x == settings.LEVEL_WIDTH-1 or y == 0 or y == settings.LEVEL_HEIGHT-1:
-				levelMap[y][x] = 1
-			
-			# Random blokjes.
-			if random.random() > 0.95:
 				levelMap[y][x] = 1
 	
 	# Plek vrijmaken voor de player.
