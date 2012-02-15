@@ -38,7 +38,7 @@ def generateLevelMap():
 				tile.append(BRICK)
 
 			# Random coins.
-			if random.random() > 0.99:
+			if random.random() > 0.95:
 				tile.append(COIN)
 
 			# Rand eromheen.
