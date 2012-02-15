@@ -13,5 +13,10 @@ class GameObject(pygame.sprite.Sprite):
 	def update(self):
 		pass
 
+	def collideVertical(self, gameObject):
+		pass
+
+	def collideHorizontal(self, gameObject):
+		pass
 
 

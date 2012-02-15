@@ -20,9 +20,7 @@ walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "playe
 
 # Geluiden.
 soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
-soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
 soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
-soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
 
 class Player(GameObject):
 	"""Object voor de player in een level.
@@ -197,63 +195,34 @@ class Player(GameObject):
 		"""
 		
 		# Ga er van uit dat we in de lucht zweven.
+		#
+		# Als er een collision plaatsvindt met de grond onder ons wordt deze
+		# in het loopje vanzelf weer op True gezet.
+		#
 		self.onGround = False
 		
-		# Loop alle bricks in de omgeving van de player bij langs.
-		for brick in self.level.cluster.getGameObjectList(self.getClusterCollisionRect()):
+		# Loop alle game objects bij langs.
+		for gameObject in self.level.cluster.getGameObjectList(self.getClusterCollisionRect()):
 			
 			# Vertical collision detection.
 			verticalMoveRect = self.rect.move((0, self.velocityY))
-			if verticalMoveRect.colliderect(brick) == True:
+			if verticalMoveRect.colliderect(gameObject) == True:
+
+				gameObject.collideVertical(self)
 				
-				# Als je naar beneden moved.
-				if self.velocityY > 0:
-					
-					# Pas de speed aan.
-					self.velocityY = brick.rect.top - self.rect.bottom
-					
-					# Als de aangepaste speed nul is betekent het dat je op de
-					# grond staat.
-					#
-					if not self.velocityY > 0:
-
-						# Als dit de eerste frame is dat je op de grond staat
-						# moet er een geluid worden afgespeeld.
-						#
-						if self.oldVelocityY > 0:
-							
-							if self.falling == False:
-								soundLand.play()
-							else:
-								soundCrash.play()
-
-						# Update alle statussen.
-						self.onGround = True
-						self.jumping = False
-						self.falling = False
-					
-				# Als je naar boven moved.
-				elif self.velocityY < 0:
-					self.velocityY = self.rect.top - brick.rect.bottom
-		
 	def collideHorizontal(self):
 		"""Voer collision detection uit voor de verticale as.
 		"""
 		
-		# Loop alle bricks in de omgeving van de player bij langs.
-		for brick in self.level.cluster.getGameObjectList(self.getClusterCollisionRect()):
+		# Loop alle game objects bij langs.
+		for gameObject in self.level.cluster.getGameObjectList(self.getClusterCollisionRect()):
 			
 			# Horizontal collision detection.
 			horizontalMoveRect = self.rect.move((self.velocityX, 0))
-			if horizontalMoveRect.colliderect(brick) == True:
+			if horizontalMoveRect.colliderect(gameObject) == True:
 				
-				# Als je naar rechts moved.
-				if self.velocityX > 0:
-					self.velocityX = brick.rect.left - self.rect.right
-					
-				# Als je naar links moved.
-				elif self.velocityX < 0:
-					self.velocityX = self.rect.left - brick.rect.right
+				gameObject.collideHorizontal(self)
+				
 	
 	def getClusterCollisionRect(self):
 		"""Return rect waarbinnen we game objects moeten ophalen om te checken
