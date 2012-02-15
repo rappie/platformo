@@ -18,8 +18,8 @@ class Brick(GameObject):
 	"""Een brick in het level.
 	"""
 	
-	def __init__(self, position):
-		GameObject.__init__(self)
+	def __init__(self, level, position):
+		GameObject.__init__(self, level)
 
 		# De image.		
 		self.image = brickImage

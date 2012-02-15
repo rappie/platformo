@@ -36,6 +36,11 @@ class Node(object):
 			blocks die colliden met 'collidingRect'.
 		"""
 		raise Exception, "Overwrite me!"
+	
+	def removeGameObject(self, gameObject):
+		"""Verwijder game object uit het cluster.
+		"""
+		raise Exception, "Overwrite me!"
 
 
 class Block(Node):
@@ -60,6 +65,12 @@ class Block(Node):
 		"""Return de lijst met game objects.
 		"""
 		return self.gameObjectList
+	
+	def removeGameObject(self, gameObject):
+		"""Verwijder game object uit het block.
+		"""
+		if gameObject in self.gameObjectList:
+			self.gameObjectList.remove(gameObject)
 
 
 class Cluster(Node):
@@ -147,24 +158,39 @@ class Cluster(Node):
 		gameObjectList = []
 		
 		# Loop door de nodes heen.
-		for x in xrange(2):
-			for y in xrange(2):
-				node = self.nodes[y][x]
+		for node in self.getNodes():
 				
-				# Voeg game objects toe aan de lijst als de node collide met
-				# 'collidingRect'.
-				#
-				if node.rect.colliderect(collidingRect) == True:
-					gameObjectList += node.getGameObjectList(collidingRect)
+			# Voeg game objects toe aan de lijst als de node collide met
+			# 'collidingRect'.
+			#
+			if node.rect.colliderect(collidingRect) == True:
+				gameObjectList += node.getGameObjectList(collidingRect)
 
 		# Return lijst met game objects.
 		return gameObjectList
+	
+	def removeGameObject(self, gameObject):
+		"""Verwijder game object uit het cluster.
+		"""
+		# Verwijder game object uit de contained objects list.
+		if gameObject in self.containedGameObjects:
+			self.containedGameObjects.remove(gameObject)
+			
+		# Roep alle nodes aan.
+		for node in self.getNodes():
+			node.removeGameObject(gameObject)
 
 	def getContainedGameObjects(self):
 		"""Return lijst met objecten die binnen de rect van deze node vallen.
 		"""
 		return self.containedGameObjects
 
-
-	
-		
+	def getNodes(self):
+		"""Return lijst met alle nodes.
+		"""
+		nodes = []
+		for x in xrange(2):
+			for y in xrange(2):
+				node = self.nodes[y][x]
+				nodes.append(node)
+		return nodes

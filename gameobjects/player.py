@@ -30,7 +30,7 @@ class Player(GameObject):
 	"""
 	
 	def __init__(self, level):
-		GameObject.__init__(self)
+		GameObject.__init__(self, level)
 		self.level = level
 		
 		# De image.

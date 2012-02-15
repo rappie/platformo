@@ -57,11 +57,21 @@ class Level(object):
 					gameObjectClass = ID_TO_OBJECT_CLASS[gameObjectId]
 					
 					# Maak aan en zet in de lijst.
-					gameObject = gameObjectClass((posX, posY))
+					gameObject = gameObjectClass(self, (posX, posY))
 					self.gameObjectList.append(gameObject)
 
 		# Maak cluster aan.
 		self.cluster = Cluster(self, None, self.getRect())
+
+	def removeGameObject(self, gameObject):
+		"""Verwijder een game object uit het level.
+		"""
+		# Verwijder game object uit het cluster.
+		self.cluster.removeGameObject(gameObject)
+		
+		# Verwijder game object uit de lijst met alle objecten.
+		if gameObject in self.gameObjectList:
+			self.gameObjectList.remove(gameObject)
 					
 	def getGameObjectList(self):
 		"""Return lijst met alle game objects.
