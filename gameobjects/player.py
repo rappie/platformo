@@ -208,6 +208,7 @@ class Player(GameObject):
 			verticalMoveRect = self.rect.move((0, self.velocityY))
 			if verticalMoveRect.colliderect(gameObject) == True:
 
+				# Voer collision uit.
 				gameObject.collideVertical(self)
 				
 	def collideHorizontal(self):
@@ -221,8 +222,8 @@ class Player(GameObject):
 			horizontalMoveRect = self.rect.move((self.velocityX, 0))
 			if horizontalMoveRect.colliderect(gameObject) == True:
 				
+				# Voer collision uit.
 				gameObject.collideHorizontal(self)
-				
 	
 	def getClusterCollisionRect(self):
 		"""Return rect waarbinnen we game objects moeten ophalen om te checken
