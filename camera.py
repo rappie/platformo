@@ -1,6 +1,8 @@
 import os
 import pygame
 
+from gameobjects.actor import Actor
+
 
 class Camera(object):
 	"""Camera klasse.
@@ -32,13 +34,20 @@ class Camera(object):
 		# Maak het scherm zwart.
 		screen.fill((0, 0, 0))
 		
-		# Lijst waar alle game objects in komen die we dit frame gaan tekenen.
+		# Lijst met alle game objects die we willen tekenen.
 		gameObjectList = []
 		
-		# Voeg alle game objects in de huidige clusters toe.
+		# Voeg alle statische dingen toe door ze uit het cluster op te halen.
 		#gameObjectList += level.cluster.getGameObjectList(level.getPlayer().getClusterCollisionRect())
 		#gameObjectList += level.cluster.getGameObjectList(level.getPlayer().getRect())
-		gameObjectList += level.cluster.getGameObjectList(self.view)
+		staticObjectList = level.cluster.getGameObjectList(self.view)
+		staticObjectList = [k for k in staticObjectList if isinstance(k, Actor) == False]
+		gameObjectList += staticObjectList
+		
+		# Voeg alle actors toe die in beeld zijn.
+		actorList = level.getActorList()
+		actorList = [k for k in actorList if self.view.colliderect(k.rect) == True]
+		gameObjectList += actorList
 		
 		# Voeg de player toe.
 		gameObjectList.append(level.getPlayer())
@@ -55,6 +64,11 @@ class Camera(object):
 		# Teken de fps.
 		text = self.font.render("%0.4f" % self.game.getClock().get_fps(), False, (255, 255, 255))
 		screen.blit(text, text.get_rect())
+		
+	def getView(self):
+		"""Return de rect van de huidige view.
+		"""
+		return self.view
 
 
 

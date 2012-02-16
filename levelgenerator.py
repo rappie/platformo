@@ -6,6 +6,7 @@ import settings
 # Variabelen voor objecten in de level map.
 BRICK = 1
 COIN = 2
+MONSTER = 3
 
 
 # Check level dimensies.
@@ -40,6 +41,10 @@ def generateLevelMap():
 			# Random coins.
 			if random.random() > 0.95:
 				tile.append(COIN)
+
+			# Random coins.
+			if random.random() > 0.99:
+				tile.append(MONSTER)
 
 			# Rand eromheen.
 			if x == 0 or x == settings.LEVEL_WIDTH-1 or y == 0 or y == settings.LEVEL_HEIGHT-1:

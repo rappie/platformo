@@ -6,6 +6,10 @@ import settings
 from gameobjects.gameobject import GameObject
 
 
+# Sounds inlezen.
+soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
+
+
 class Actor(GameObject):
 	"""Een actor game object.
 	
@@ -95,11 +99,11 @@ class Actor(GameObject):
 			self.falling = True
 			
 		# Move eerst verticaal.
-		self.collideVertical()
+		self.checkVerticalCollisions()
 		self.rect = self.rect.move((0, self.velocityY))
 
 		# Move daarna horizontaal.
-		self.collideHorizontal()
+		self.checkHorizontalCollisions()
 		self.rect = self.rect.move((self.velocityX, 0))
 		
 		# Sla de snelheid/positie op zodat de volgende frame dit zou kunnen
@@ -109,7 +113,7 @@ class Actor(GameObject):
 		self.oldVelocityY = self.velocityY
 		self.oldRect = self.rect.copy()
 
-	def collideVertical(self):
+	def checkVerticalCollisions(self):
 		"""Voer collision detection uit voor de verticale as.
 		"""
 		
@@ -130,8 +134,8 @@ class Actor(GameObject):
 				# Voer collision uit.
 				gameObject.collideVertical(self)
 				
-	def collideHorizontal(self):
-		"""Voer collision detection uit voor de verticale as.
+	def checkHorizontalCollisions(self):
+		"""Voer collision detection uit voor de horizontale as.
 		"""
 		
 		# Loop alle game objects bij langs.

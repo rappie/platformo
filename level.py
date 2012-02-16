@@ -5,14 +5,17 @@ import settings
 import levelgenerator
 
 from cluster import Cluster
+from gameobjects.actor import Actor
 from gameobjects.brick import Brick
 from gameobjects.coin import Coin
+from gameobjects.monster import Monster
 
 
 # Map van levelmap-id naar klasse voor game object.
 ID_TO_OBJECT_CLASS = {}
 ID_TO_OBJECT_CLASS[levelgenerator.BRICK] = Brick
 ID_TO_OBJECT_CLASS[levelgenerator.COIN] = Coin
+ID_TO_OBJECT_CLASS[levelgenerator.MONSTER] = Monster
 
 
 class Level(object):
@@ -29,6 +32,9 @@ class Level(object):
 		
 		# Lijst met alle game objects.
 		self.gameObjectList = []
+		
+		# Lijst met alle actors.
+		self.actorList = []
 		
 		# Maak een level aan.
 		self.levelMap = levelgenerator.generateLevelMap()
@@ -60,6 +66,10 @@ class Level(object):
 					gameObjectRect = pygame.Rect(posX, posY, settings.TILE_WIDTH, settings.TILE_HEIGHT)
 					gameObject = gameObjectClass(self, gameObjectRect)
 					self.gameObjectList.append(gameObject)
+					
+					# Voeg toe aan actor list als het een actor is.
+					if isinstance(gameObject, Actor):
+						self.actorList.append(gameObject)
 
 		# Maak cluster aan.
 		self.cluster = Cluster(self, None, self.getRect())
@@ -77,8 +87,13 @@ class Level(object):
 	def getGameObjectList(self):
 		"""Return lijst met alle game objects.
 		"""
-		return self.gameObjectList
+		return self.gameObjectList[:]
 	
+	def getActorList(self):
+		"""Return lijst met alle actors.
+		"""
+		return self.actorList[:]
+
 	def getPlayer(self):
 		"""Return het player object.
 		"""

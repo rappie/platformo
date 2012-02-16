@@ -57,8 +57,11 @@ class Game(object):
 			#
 			inputState.update()
 			
-			# Update de positie van de player.
-			self.player.update()
+			# Update alle actors in het level.
+			gameObjectsToUpdate = self.level.getActorList()
+			gameObjectsToUpdate.append(self.player)
+			for gameObject in gameObjectsToUpdate:
+				gameObject.update()
 			
 			# Update de camera omdat de positie van de player veranderd kan zijn.
 			self.camera.update()

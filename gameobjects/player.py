@@ -20,7 +20,6 @@ walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "playe
 
 # Geluiden.
 soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
-soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
 
 
 class Player(Actor):
