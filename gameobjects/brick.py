@@ -11,7 +11,7 @@ soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
 soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
 
 # Image van brick.
-brickImage = pygame.image.load(os.path.join(".", "data", "tiles", "brick.png"))
+imageBrick = pygame.image.load(os.path.join(".", "data", "tiles", "brick.png"))
 
 
 class Brick(GameObject):
@@ -22,7 +22,7 @@ class Brick(GameObject):
 		GameObject.__init__(self, level, rect)
 
 		# De image.		
-		self.image = brickImage
+		self.image = imageBrick
 
 	def collideVertical(self, gameObject):
 		"""Voer verticale collision detection uit met game object.
