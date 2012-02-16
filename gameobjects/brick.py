@@ -18,14 +18,11 @@ class Brick(GameObject):
 	"""Een brick in het level.
 	"""
 	
-	def __init__(self, level, position):
-		GameObject.__init__(self, level)
+	def __init__(self, level, rect):
+		GameObject.__init__(self, level, rect)
 
 		# De image.		
 		self.image = brickImage
-
-		# De rect.
-		self.rect = pygame.Rect(position, (settings.TILE_WIDTH, settings.TILE_HEIGHT))
 
 	def collideVertical(self, gameObject):
 		"""Voer verticale collision detection uit met game object.

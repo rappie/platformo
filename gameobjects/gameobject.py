@@ -8,11 +8,11 @@ class GameObject(pygame.sprite.Sprite):
 		
 	"""
 	
-	def __init__(self, level):
+	def __init__(self, level, rect):
 		pygame.sprite.Sprite.__init__(self)
 		
 		self.level = level
-		self.rect = None
+		self.rect = rect
 		self.image = None
 		
 	def update(self):

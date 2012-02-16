@@ -17,14 +17,11 @@ class Coin(GameObject):
 	"""Een coin in het level.
 	"""
 	
-	def __init__(self, level, position):
-		GameObject.__init__(self, level)
+	def __init__(self, level, rect):
+		GameObject.__init__(self, level, rect)
 
 		# De image.		
 		self.image = brickImage
-
-		# De rect.
-		self.rect = pygame.Rect(position, (settings.TILE_WIDTH, settings.TILE_HEIGHT))
 	
 	def collision(self):
 		"""Verwijder de coin.

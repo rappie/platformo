@@ -13,15 +13,22 @@ from camera import Camera
 
 class Game(object):
 	"""De main klasse van het spel.
-		Hier worden alle basis dingen zoals het level en de player en de drawer
+		Hier worden alle basis dingen zoals het level en de player en de camera
 		in bijgehouden. Met 'run()' kan je de main loop starten.
 	"""
 	
 	def __init__(self):
 
-		# Maak level en player objecten aan.
+		# Maak level aan.
 		self.level = Level()
-		self.player = Player(self.level)
+
+		# Bepaal rect van de Player.
+		initialX = 1*settings.TILE_WIDTH
+		initialY = (settings.LEVEL_HEIGHT-2)*settings.TILE_HEIGHT
+		playerRect = pygame.Rect(initialX, initialY, settings.PLAYER_WIDTH, settings.PLAYER_HEIGHT)
+
+		# Maak player aan.
+		self.player = Player(self.level, playerRect)
 		self.level.setPlayer(self.player)
 
 		# Maak het scherm aan.
@@ -34,9 +41,8 @@ class Game(object):
 		# Maak Clock object aan.
 		self.clock = pygame.time.Clock()
 	
-		# Maak drawer object aan.
+		# Maak een camera object aan.
 		self.camera = Camera(self)
-
 	
 	def run(self):
 		"""Start de main loop van het spel.
@@ -54,7 +60,7 @@ class Game(object):
 			# Update de positie van de player.
 			self.player.update()
 			
-			# Update de drawer omdat de positie van de player veranderd kan zijn.
+			# Update de camera omdat de positie van de player veranderd kan zijn.
 			self.camera.update()
 					
 			# Teken het level opnieuw.

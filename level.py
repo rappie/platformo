@@ -57,7 +57,8 @@ class Level(object):
 					gameObjectClass = ID_TO_OBJECT_CLASS[gameObjectId]
 					
 					# Maak aan en zet in de lijst.
-					gameObject = gameObjectClass(self, (posX, posY))
+					gameObjectRect = pygame.Rect(posX, posY, settings.TILE_WIDTH, settings.TILE_HEIGHT)
+					gameObject = gameObjectClass(self, gameObjectRect)
 					self.gameObjectList.append(gameObject)
 
 		# Maak cluster aan.

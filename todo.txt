@@ -1,15 +1,13 @@
 
 
 nu
+* verwijderen van objecten (coins) uit het level is te traag
 
 
 refactor
-* player toevoegen aan object list en mee tekenen in de drawer
-* drawer hernoemen naar camera
-* levelgenerator moet per tile een lijst hebben met objecten zodat er meer dan 1 in kan zitten
-* generiekere manier van het Level vullen met game objects ipv met ifjes
-* collision detection verplaatsen naar game objects?
-* kijken of er iets in GameObject kan, bijvoorbeeld het aanmaken van de rect ofzo
+* verdere opsplitsing van Actor & Player
+** geluiden moeten weer in player
+** extra methodes maken voor moveLeft() enzo?
 
 
 later
