@@ -6,10 +6,6 @@ import settings
 from gameobjects.gameobject import GameObject
 
 
-# Lees geluiden in.
-soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
-soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
-
 # Image van brick.
 imageBrick = pygame.image.load(os.path.join(".", "data", "tiles", "brick.png"))
 
@@ -45,11 +41,12 @@ class Brick(GameObject):
 				#
 				if gameObject.oldVelocityY > 0:
 					
-					# Speel afhankelijk van hoe je valt een ander geluid af.
-					if gameObject.falling == False:
-						soundLand.play()
-					else:
-						soundCrash.play()
+					# Roep onLand event aan bij het game object.
+					gameObject.onLand()
+					
+					# Als het game object viel is er fall damage.
+					if gameObject.falling == True:
+						gameObject.takeFallDamage(gameObject.velocityY)
 
 				# Update alle statussen.
 				gameObject.onGround = True

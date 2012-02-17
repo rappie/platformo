@@ -73,6 +73,16 @@ class Actor(GameObject):
 		"""
 		pass
 
+	def onLand(self):
+		"""Methode die wordt aangeroepen als de actor op de grond landt.
+		"""
+		pass
+	
+	def takeFallDamage(self, verticalVelocity):
+		"""Methode die wordt aangeroepen als de actor fall damage krijgt.
+		"""
+		pass
+
 	def updatePhysics(self):
 		"""Update de physics.
 		"""

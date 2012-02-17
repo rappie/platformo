@@ -21,6 +21,8 @@ walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "playe
 # Sounds inlezen.
 soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
 soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
+soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
+soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
 
 
 class Player(Actor):
@@ -139,4 +141,15 @@ class Player(Actor):
 		"""
 		soundScream.play()
 
-
+	def onLand(self):
+		"""Laat een landing-geluid horen als je op de grond landt.
+		"""
+		soundLand.play()
+		
+	def takeFallDamage(self, verticalVelocity):
+		"""Fall damage.
+			Op dit moment is er geen damage maar alleen een geluid.
+		"""
+		soundCrash.play()
+		
+	
