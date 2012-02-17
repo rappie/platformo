@@ -4,6 +4,7 @@ import pygame
 import settings
 
 from gameobjects.gameobject import GameObject
+from gameobjects.player import Player
 
 
 # Lees geluiden in.
@@ -23,20 +24,21 @@ class Coin(GameObject):
 		# De image.		
 		self.image = imageCoin
 	
-	def collision(self):
+	def collision(self, gameObject):
 		"""Verwijder de coin.
 		"""
-		soundCoin.play()
-		self.remove()
+		if isinstance(gameObject, Player):
+			soundCoin.play()
+			self.remove()
 		
 	def collideVertical(self, gameObject):
 		"""Stuur door naar generieke collision() methode.
 		"""
-		self.collision()
+		self.collision(gameObject)
 		
 	def collideHorizontal(self, gameObject):
 		"""Stuur door naar generieke collision() methode.
 		"""
-		self.collision()
+		self.collision(gameObject)
 	
 	
