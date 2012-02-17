@@ -8,14 +8,14 @@ class Node(object):
 		Dit is de superklasse van alle cluster klasses.
 	"""
 
-	def __init__(self, level, parent, rect, depth=1):
+	def __init__(self, level, parentObjectList, rect, depth=1):
 		"""Maak een nieuwe Node.
 		
 			level:
 				Verwijzing naar het level object.
 			
-			parent:
-				Verwijzing naar de parent Node. Mag None zijn.
+			parentObjectList:
+				Lijst met alle game objects van de parent.
 			
 			rect:
 				De rect van deze node.
@@ -26,7 +26,7 @@ class Node(object):
 				
 		"""
 		self.level = level
-		self.parent = parent
+		self.parentObjectList = parentObjectList
 		self.rect = rect
 		self.depth = depth
 
@@ -41,7 +41,7 @@ class Node(object):
 		"""Verwijder game object uit het cluster.
 		"""
 		raise Exception, "Overwrite me!"
-
+	
 
 class Block(Node):
 	"""Een cluster block.
@@ -50,14 +50,14 @@ class Block(Node):
 		bevatten de daadwerkelijke lijst met game objects.
 	"""
 	
-	def __init__(self, level, parent, rect, depth):
-		Node.__init__(self, level, parent, rect, depth)
+	def __init__(self, level, parentObjectList, rect, depth):
+		Node.__init__(self, level, parentObjectList, rect, depth)
 		
 		# Lijst met alle game objects van dit block.
 		self.gameObjectList = []
 		
 		# Vul de lijst met game objects.
-		for gameObject in self.parent.getContainedGameObjects():
+		for gameObject in parentObjectList:
 			if gameObject.rect.colliderect(self.rect) == True:
 				self.gameObjectList.append(gameObject)
 				
@@ -82,28 +82,12 @@ class Cluster(Node):
 	
 	"""
 	
-	def __init__(self, level, parent, rect, depth=1):
-		Node.__init__(self, level, parent, rect, depth)
+	def __init__(self, level, parentObjectList, rect, depth=1):
+		Node.__init__(self, level, parentObjectList, rect, depth)
 
 		# Lijst met de nodes.
 		self.nodes = [[None, None], [None, None]]
 
-		# Bepaal de object lijst van de parent.
-		#
-		# Als de parent None is, worden alle game objects uit het level
-		# gebruikt.
-		#
-		if self.parent == None:
-			parentGameObjectList = self.level.getGameObjectList()
-		else:
-			parentGameObjectList = self.parent.getContainedGameObjects()
-
-		# Lijst met objecten die binnen dit cluster vallen.
-		self.containedGameObjects = []
-		for gameObject in parentGameObjectList:
-			if self.rect.colliderect(gameObject) == True:
-				self.containedGameObjects.append(gameObject)
-			
 		# Vul de nodes.	
 		self.fillNodes()
 		
@@ -114,6 +98,12 @@ class Cluster(Node):
 			Clusters moeten worden.
 		"""
 		
+		# Bepaal lijst met game objects die binnen dit cluster vallen.
+		containedGameObjects = []
+		for gameObject in self.parentObjectList:
+			if self.rect.colliderect(gameObject) == True:
+				containedGameObjects.append(gameObject)
+
 		# Bepaal of de volgende laag Blocks of Clusters moeten worden.
 		blockSize = self.rect.width/settings.TILE_WIDTH/2
 		if blockSize == settings.BLOCK_SIZE:
@@ -129,25 +119,25 @@ class Cluster(Node):
 		x = self.rect.left + 0
 		y = self.rect.top + 0
 		rect = pygame.Rect(x, y, width, height)
-		self.nodes[0][0] = blockClass(self.level, self, rect, self.depth+1)
+		self.nodes[0][0] = blockClass(self.level, containedGameObjects, rect, self.depth+1)
 		
 		# Vul Rechtsboven.
 		x = self.rect.left + (self.rect.width/2)
 		y = self.rect.top + 0
 		rect = pygame.Rect(x, y, width, height)
-		self.nodes[1][0] = blockClass(self.level, self, rect, self.depth+1)
+		self.nodes[1][0] = blockClass(self.level, containedGameObjects, rect, self.depth+1)
 
 		# Vul Linksonder.
 		x = self.rect.left + 0
 		y = self.rect.top + (self.rect.height/2)
 		rect = pygame.Rect(x, y, width, height)
-		self.nodes[0][1] = blockClass(self.level, self, rect, self.depth+1)
+		self.nodes[0][1] = blockClass(self.level, containedGameObjects, rect, self.depth+1)
 
 		# Vul rechtsonder.
 		x = self.rect.left + (self.rect.width/2)
 		y = self.rect.top + (self.rect.height/2)
 		rect = pygame.Rect(x, y, width, height)
-		self.nodes[1][1] = blockClass(self.level, self, rect, self.depth+1)
+		self.nodes[1][1] = blockClass(self.level, containedGameObjects, rect, self.depth+1)
 		
 	def getGameObjectList(self, collidingRect):
 		"""Return de lijst met game objects.
@@ -172,18 +162,12 @@ class Cluster(Node):
 	def removeGameObject(self, gameObject):
 		"""Verwijder game object uit het cluster.
 		"""
-		# Verwijder game object uit de contained objects list.
-		if gameObject in self.containedGameObjects:
-			self.containedGameObjects.remove(gameObject)
-			
-		# Roep alle nodes aan.
-		for node in self.getNodes():
-			node.removeGameObject(gameObject)
+		# Check of het game object collide met dit cluster.
+		if self.rect.colliderect(gameObject.rect) == True:
 
-	def getContainedGameObjects(self):
-		"""Return lijst met objecten die binnen de rect van deze node vallen.
-		"""
-		return self.containedGameObjects
+			# Roep verwijderen aan bij alle nodes.
+			for node in self.getNodes():
+				node.removeGameObject(gameObject)
 
 	def getNodes(self):
 		"""Return lijst met alle nodes.

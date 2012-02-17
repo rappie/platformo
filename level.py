@@ -30,31 +30,45 @@ class Level(object):
 		# Player object.
 		self.player = None
 		
-		# Lijst met alle game objects.
-		self.gameObjectList = []
-		
-		# Lijst met alle actors.
-		self.actorList = []
-		
-		# Maak een level aan.
-		self.levelMap = levelgenerator.generateLevelMap()
 		
 		# Bepaal de rect van het gehele level.
 		self.rect = pygame.Rect(0, 0, settings.TILE_WIDTH*settings.LEVEL_WIDTH, settings.TILE_HEIGHT*settings.LEVEL_HEIGHT)
 		
-		# Vul de game object list aan de hand van de level map.
+		
+		# Bepaal de lijst met alle game objects van dit level.
 		#
+		# Dit doen we door eerst een levelmap te genereren met een level-
+		# generator. Vervolgens lopen we de level map door en maken we alle game
+		# objects aan.
+		#
+		levelMap = levelgenerator.generateLevelMap()
+		gameObjectList = self.getGameObjectListFromLevelMap(levelMap)
+		
+		# Maak cluster aan waar alle game objects in worden opgeslagen.
+		self.cluster = Cluster(self, gameObjectList, self.rect)
+
+		# Maak lijst aan met alle actors.
+		self.actorList = []
+		for gameObject in gameObjectList:
+			if isinstance(gameObject, Actor):
+				self.actorList.append(gameObject)
+
+	def getGameObjectListFromLevelMap(self, levelMap):
+		"""Return lijst met alle game objects beschreven in 'levelMap'.
+		"""
+		# De lijst met game objects die we gaan returnen.
+		gameObjectList = []
+		
 		# Loop door alle tiles heen.
-		#
-		for y in xrange(len(self.levelMap)):
-			for x in xrange(len(self.levelMap[0])):
+		for y in xrange(len(levelMap)):
+			for x in xrange(len(levelMap[0])):
 				
 				# Bepaal de x/y positie.
 				posX = x * settings.TILE_WIDTH
 				posY = y * settings.TILE_HEIGHT
 
 				# Haal tile op.
-				tile = self.levelMap[y][x]
+				tile = levelMap[y][x]
 				
 				# Loop door alle game object id's in de tile heen.
 				for gameObjectId in tile:
@@ -65,30 +79,16 @@ class Level(object):
 					# Maak aan en zet in de lijst.
 					gameObjectRect = pygame.Rect(posX, posY, settings.TILE_WIDTH, settings.TILE_HEIGHT)
 					gameObject = gameObjectClass(self, gameObjectRect)
-					self.gameObjectList.append(gameObject)
+					gameObjectList.append(gameObject)
+		
+		# Return de game objects.
+		return gameObjectList
 					
-					# Voeg toe aan actor list als het een actor is.
-					if isinstance(gameObject, Actor):
-						self.actorList.append(gameObject)
-
-		# Maak cluster aan.
-		self.cluster = Cluster(self, None, self.getRect())
-
 	def removeGameObject(self, gameObject):
 		"""Verwijder een game object uit het level.
 		"""
-		# Verwijder game object uit het cluster.
 		self.cluster.removeGameObject(gameObject)
 		
-		# Verwijder game object uit de lijst met alle objecten.
-		if gameObject in self.gameObjectList:
-			self.gameObjectList.remove(gameObject)
-					
-	def getGameObjectList(self):
-		"""Return lijst met alle game objects.
-		"""
-		return self.gameObjectList[:]
-	
 	def getActorList(self):
 		"""Return lijst met alle actors.
 		"""
@@ -103,9 +103,5 @@ class Level(object):
 		"""Set het player object.
 		"""
 		self.player = player
-	
-	def getRect(self):
-		"""Return de rect van het gehele level.
-		"""
-		return self.rect
+
 		
