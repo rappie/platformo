@@ -39,8 +39,9 @@ def generateLevelMap():
 				tile.append(BRICK)
 
 			# Random coins.
-			if random.random() > 0.95:
-				tile.append(COIN)
+			if tile == []:
+				if random.random() > 0.95:
+					tile.append(COIN)
 
 			# Random coins.
 			if random.random() > 0.99:
