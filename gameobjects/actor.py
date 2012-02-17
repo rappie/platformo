@@ -6,10 +6,6 @@ import settings
 from gameobjects.gameobject import GameObject
 
 
-# Sounds inlezen.
-soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
-
-
 class Actor(GameObject):
 	"""Een actor game object.
 	
@@ -71,6 +67,11 @@ class Actor(GameObject):
 			Een default actor staat stil, dus hier doen we niks.
 		"""
 		pass
+	
+	def onFall(self):
+		"""Methode die wordt aangeroepen als de actor valt.
+		"""
+		pass
 
 	def updatePhysics(self):
 		"""Update de physics.
@@ -95,7 +96,7 @@ class Actor(GameObject):
 		# Bepaal of je aan het vallen bent.
 		if self.velocityY >= settings.PLAYER_MAX_SPEED_VERTICAL:
 			if self.oldVelocityY < settings.PLAYER_MAX_SPEED_VERTICAL:
-				soundScream.play()
+				self.onFall()
 			self.falling = True
 			
 		# Move eerst verticaal.

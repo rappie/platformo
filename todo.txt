@@ -8,6 +8,7 @@ refactor
 * verdere opsplitsing van Actor & Player
 ** geluiden moeten weer in player
 ** extra methodes maken voor moveLeft() enzo?
+* iets van een soundgenerator die ervoor zorgt dat een geluid niet te snel na elkaar afgespeeld kan worden?
 
 
 later

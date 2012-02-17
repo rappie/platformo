@@ -18,7 +18,8 @@ walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "playe
 walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk03.png")))
 walkImageList.append(pygame.image.load(os.path.join(".", "data", "tiles", "player_walk04.png")))
 
-# Geluiden.
+# Sounds inlezen.
+soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"))
 soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
 
 
@@ -132,4 +133,10 @@ class Player(Actor):
 		# Als je niks doet sta je stil.
 		else:
 			self.velocityX = 0
+			
+	def onFall(self):
+		"""Laat een schrik-geluid horen als je valt.
+		"""
+		soundScream.play()
+
 
