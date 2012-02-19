@@ -30,10 +30,8 @@ class Level(object):
 		# Player object.
 		self.player = None
 		
-		
 		# Bepaal de rect van het gehele level.
 		self.rect = pygame.Rect(0, 0, settings.TILE_WIDTH*settings.LEVEL_WIDTH, settings.TILE_HEIGHT*settings.LEVEL_HEIGHT)
-		
 		
 		# Bepaal de lijst met alle game objects van dit level.
 		#
