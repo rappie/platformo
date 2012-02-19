@@ -23,6 +23,7 @@ soundScream = pygame.mixer.Sound(os.path.join(".", "data", "sound", "scream.wav"
 soundJump = pygame.mixer.Sound(os.path.join(".", "data", "sound", "jump.wav"))
 soundLand = pygame.mixer.Sound(os.path.join(".", "data", "sound", "land.wav"))
 soundCrash = pygame.mixer.Sound(os.path.join(".", "data", "sound", "crash.wav"))
+soundOuch = pygame.mixer.Sound(os.path.join(".", "data", "sound", "ouch.wav"))
 
 
 class Player(Actor):
@@ -173,6 +174,7 @@ class Player(Actor):
 	def takeDamage(self, amount):
 		"""Normale damage.
 		"""
+		soundOuch.play()
 		self.health -= amount
 		
 	def getHealth(self):
