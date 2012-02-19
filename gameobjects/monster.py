@@ -50,7 +50,7 @@ class Monster(Actor):
 		"""Verwijder de coin.
 		"""
 		if isinstance(gameObject, Player):
-			gameObject.takeDamage(10.0)
+			gameObject.takeDamage(20.0)
 			self.remove()
 		
 	def collideVertical(self, gameObject):

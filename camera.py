@@ -34,6 +34,12 @@ class Camera(object):
 		# Maak het scherm zwart.
 		screen.fill((0, 0, 0))
 		
+		# Als de player dood is tekenen we alleen game over.
+		if level.getPlayer().isAlive() == False:
+			text = self.font.render("Game over!", False, (255, 255, 255))
+			screen.blit(text, (400, 300))
+			return
+		
 		# Lijst met alle game objects die we willen tekenen.
 		gameObjectList = []
 		

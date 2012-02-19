@@ -50,6 +50,9 @@ class Player(Actor):
 		
 		# Score van de player.
 		self.score = 0
+		
+		# Boolean die bepaalt of je nog leeft.
+		self.alive = True
 
 	def update(self):
 		"""Extend het updaten van actor.
@@ -57,6 +60,14 @@ class Player(Actor):
 			klasse voor 'AnimatedGameObject' oid. die dit voor ons afhandelt.
 		"""
 		Actor.update(self)
+		
+		# Check of je nog leeft.
+		if self.health > 0:
+			self.alive = True
+		else:
+			self.alive = False
+		
+		# Update de image.
 		self.updateImage()
 
 	def updateImage(self):
@@ -178,3 +189,13 @@ class Player(Actor):
 		"""Return de score van de player.
 		"""
 		return self.score
+	
+	def isAlive(self):
+		"""Return of de player nog leeft.
+		"""
+		return self.alive
+	
+
+
+
+
