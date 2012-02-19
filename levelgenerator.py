@@ -7,7 +7,7 @@ import settings
 BRICK = 1
 COIN = 2
 MONSTER = 3
-
+EXIT = 4
 
 # Check level dimensies.
 #
@@ -53,6 +53,9 @@ def generateLevelMap():
 	
 	# Plek vrijmaken voor de player.
 	levelMap[-2][1] = []
+
+	# Exit plaatsen
+	levelMap[1][-2] = [EXIT]
 	
 	# Return het level.
 	return levelMap

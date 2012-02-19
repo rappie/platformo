@@ -9,6 +9,7 @@ from gameobjects.actor import Actor
 from gameobjects.brick import Brick
 from gameobjects.coin import Coin
 from gameobjects.monster import Monster
+from gameobjects.exit import Exit
 
 
 # Map van levelmap-id naar klasse voor game object.
@@ -16,6 +17,7 @@ ID_TO_OBJECT_CLASS = {}
 ID_TO_OBJECT_CLASS[levelgenerator.BRICK] = Brick
 ID_TO_OBJECT_CLASS[levelgenerator.COIN] = Coin
 ID_TO_OBJECT_CLASS[levelgenerator.MONSTER] = Monster
+ID_TO_OBJECT_CLASS[levelgenerator.EXIT] = Exit
 
 
 class Level(object):
@@ -29,6 +31,9 @@ class Level(object):
 		
 		# Player object.
 		self.player = None
+		
+		# Boolean voor of je het level hebt gehaald.
+		self.finished = False
 		
 		# Bepaal de rect van het gehele level.
 		self.rect = pygame.Rect(0, 0, settings.TILE_WIDTH*settings.LEVEL_WIDTH, settings.TILE_HEIGHT*settings.LEVEL_HEIGHT)
@@ -102,6 +107,16 @@ class Level(object):
 		"""
 		return self.actorList[:]
 
+	def setFinished(self, finished):
+		"""Set of het level is gehaald.
+		"""
+		self.finished = finished
+
+	def isFinished(self):
+		"""Return of je het level hebt gehaald.
+		"""
+		return self.finished
+
 	def getPlayer(self):
 		"""Return het player object.
 		"""
@@ -112,4 +127,5 @@ class Level(object):
 		"""
 		self.player = player
 
-		
+
+

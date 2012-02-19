@@ -39,6 +39,12 @@ class Camera(object):
 			text = self.font.render("Game over!", False, (255, 255, 255))
 			screen.blit(text, (400, 300))
 			return
+
+		# Als het level gehaald is tekenen we alleen congratulations.
+		if level.isFinished() == True:
+			text = self.font.render("Congratulations! You've escaped.", False, (255, 255, 255))
+			screen.blit(text, (300, 300))
+			return
 		
 		# Lijst met alle game objects die we willen tekenen.
 		gameObjectList = []
