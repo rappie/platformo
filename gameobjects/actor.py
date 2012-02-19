@@ -82,6 +82,11 @@ class Actor(GameObject):
 		"""Methode die wordt aangeroepen als de actor fall damage krijgt.
 		"""
 		pass
+	
+	def takeDamage(self, amount):
+		"""Methode die wordt aangeroepen als de actor damage krijgt.
+		"""
+		pass
 
 	def updatePhysics(self):
 		"""Update de physics.

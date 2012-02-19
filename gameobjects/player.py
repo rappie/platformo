@@ -44,6 +44,9 @@ class Player(Actor):
 		
 		# Laatste tick wanneer de animatie is geupdate.
 		self.lastAnimationUpdate = 0
+		
+		# Health van de player.
+		self.health = 100.0
 
 	def update(self):
 		"""Extend het updaten van actor.
@@ -152,4 +155,12 @@ class Player(Actor):
 		"""
 		soundCrash.play()
 		
-	
+	def takeDamage(self, amount):
+		"""Normale damage.
+		"""
+		self.health -= amount
+		
+	def getHealth(self):
+		"""Return de health van de player.
+		"""
+		return self.health

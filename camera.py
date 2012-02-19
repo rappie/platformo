@@ -63,7 +63,11 @@ class Camera(object):
 
 		# Teken de fps.
 		text = self.font.render("%0.4f" % self.game.getClock().get_fps(), False, (255, 255, 255))
-		screen.blit(text, text.get_rect())
+		screen.blit(text, (0, 0))
+
+		# Teken de health.
+		text = self.font.render("%0.1f" % level.getPlayer().getHealth(), False, (255, 255, 255))
+		screen.blit(text, (100, 0))
 		
 	def getView(self):
 		"""Return de rect van de huidige view.

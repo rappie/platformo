@@ -92,7 +92,10 @@ class Level(object):
 	def removeGameObject(self, gameObject):
 		"""Verwijder een game object uit het level.
 		"""
-		self.cluster.removeGameObject(gameObject)
+		if isinstance(gameObject, Actor):
+			self.actorList.remove(gameObject)
+		else:
+			self.cluster.removeGameObject(gameObject)
 		
 	def getActorList(self):
 		"""Return lijst met alle actors.
