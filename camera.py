@@ -68,6 +68,10 @@ class Camera(object):
 		# Teken de health.
 		text = self.font.render("%0.1f" % level.getPlayer().getHealth(), False, (255, 255, 255))
 		screen.blit(text, (100, 0))
+
+		# Teken de score.
+		text = self.font.render("%i" % level.getPlayer().getScore(), False, (255, 255, 255))
+		screen.blit(text, (600, 0))
 		
 	def getView(self):
 		"""Return de rect van de huidige view.

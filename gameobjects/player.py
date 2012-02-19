@@ -47,6 +47,9 @@ class Player(Actor):
 		
 		# Health van de player.
 		self.health = 100.0
+		
+		# Score van de player.
+		self.score = 0
 
 	def update(self):
 		"""Extend het updaten van actor.
@@ -165,3 +168,13 @@ class Player(Actor):
 		"""Return de health van de player.
 		"""
 		return self.health
+	
+	def addScore(self, amount):
+		"""Voeg score toe aan de score van de player.
+		"""
+		self.score += 1
+		
+	def getScore(self):
+		"""Return de score van de player.
+		"""
+		return self.score

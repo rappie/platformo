@@ -28,6 +28,7 @@ class Coin(GameObject):
 		"""Verwijder de coin.
 		"""
 		if isinstance(gameObject, Player):
+			gameObject.addScore(1)
 			soundCoin.play()
 			self.remove()
 		
