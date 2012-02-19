@@ -154,6 +154,7 @@ class Player(Actor):
 			Op dit moment is er geen damage maar alleen een geluid.
 		"""
 		soundCrash.play()
+		self.health -= 20.0
 		
 	def takeDamage(self, amount):
 		"""Normale damage.
