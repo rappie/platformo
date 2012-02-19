@@ -1,19 +1,16 @@
 
 
 nu
-* verwijderen van objecten (coins) uit het level is te traag
-
+* alt+tab functionaliteit
 
 refactor
-* verdere opsplitsing van Actor & Player
-** geluiden moeten weer in player
-** extra methodes maken voor moveLeft() enzo?
-* iets van een soundgenerator die ervoor zorgt dat een geluid niet te snel na elkaar afgespeeld kan worden?
+* actors zitten in het cluster en dat moet niet
 
 
 later
 * kijken naar het .convert() gedeelte van de images
 * fps counter afhankelijk van keybinding oid maken
+* iets van een soundgenerator die ervoor zorgt dat een geluid niet te snel na elkaar afgespeeld kan worden?
 
 
 features

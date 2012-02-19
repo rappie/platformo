@@ -45,13 +45,11 @@ class Level(object):
 		gameObjectList = self.getGameObjectListFromLevelMap(levelMap)
 		
 		# Maak cluster aan waar alle game objects in worden opgeslagen.
-		self.cluster = Cluster(self, gameObjectList, self.rect)
+		staticObjectList = [k for k in gameObjectList if isinstance(k, Actor) == False]
+		self.cluster = Cluster(self, staticObjectList, self.rect)
 
 		# Maak lijst aan met alle actors.
-		self.actorList = []
-		for gameObject in gameObjectList:
-			if isinstance(gameObject, Actor):
-				self.actorList.append(gameObject)
+		self.actorList = [k for k in gameObjectList if isinstance(k, Actor) == True]
 
 	def getGameObjectListFromLevelMap(self, levelMap):
 		"""Return lijst met alle game objects beschreven in 'levelMap'.
