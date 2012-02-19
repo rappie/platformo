@@ -5,6 +5,7 @@ import pygame
 import settings
 
 from gameobjects.actor import Actor
+from gameobjects.player import Player
 
 
 # Maak de image hier aan zodat hij maar 1x wordt ingelezen.
@@ -45,5 +46,19 @@ class Monster(Actor):
 			self.nextMovementSwitch = ticks + random.randint(1000, 5000)
 			self.movementSwitch = not self.movementSwitch
 		
+	def collision(self, gameObject):
+		"""Verwijder de coin.
+		"""
+		if isinstance(gameObject, Player):
+			pass
 		
+	def collideVertical(self, gameObject):
+		"""Stuur door naar generieke collision() methode.
+		"""
+		self.collision(gameObject)
+		
+	def collideHorizontal(self, gameObject):
+		"""Stuur door naar generieke collision() methode.
+		"""
+		self.collision(gameObject)
 	

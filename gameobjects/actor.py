@@ -136,7 +136,7 @@ class Actor(GameObject):
 		self.onGround = False
 		
 		# Loop alle game objects bij langs.
-		for gameObject in self.level.cluster.getGameObjectList(self.getClusterCollisionRect()):
+		for gameObject in self.level.getGameObjectList(self.getClusterCollisionRect()):
 			
 			# Vertical collision detection.
 			verticalMoveRect = self.rect.move((0, self.velocityY))

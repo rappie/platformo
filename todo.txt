@@ -1,10 +1,10 @@
 
 
 nu
-* alt+tab functionaliteit
+* alt+enter functionaliteit
 
 refactor
-* actors zitten in het cluster en dat moet niet
+* iets vinden voor dat je nu 2x een collision event krijgt (horizontal & vertical)
 
 
 later

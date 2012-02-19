@@ -79,7 +79,16 @@ class Level(object):
 		
 		# Return de game objects.
 		return gameObjectList
-					
+
+	def getGameObjectList(self, clusterCollisionRect):
+		"""Return alle game objects.
+			Er worden alleen statische game objects gereturned die colliden met
+			'clusterCollisionRect'. Daarnaast worden alle actors gereturned.
+		"""
+		gameObjectList = self.cluster.getGameObjectList(clusterCollisionRect)
+		gameObjectList += self.getActorList()
+		return gameObjectList
+
 	def removeGameObject(self, gameObject):
 		"""Verwijder een game object uit het level.
 		"""
