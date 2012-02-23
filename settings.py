@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  S E T T I N G S
+#                         S  E  T  T  I  N  G  S
 # 
 ################################################################################
 #
@@ -60,6 +60,22 @@ MAX_FPS = 100
 # Deze variabele bepaalt hoeveel miliseconden een player animation frame duurt.
 #
 PLAYER_ANIMATION_SPEED = 200
+
+
+# Kleuren van de letters in het menu.
+MENU_COLOR_NORMAL = (255, 255, 255)
+MENU_COLOR_SELECTED = (200, 100, 100)
+
+# Fontnaam in het menu.
+#MENU_FONTNAME = "MateSC-Regular.ttf"
+MENU_FONTNAME = "Slackey.ttf"
+#MENU_FONTNAME = "Raleway-Thin.ttf"
+#MENU_FONTNAME = "Neucha.ttf"
+#MENU_FONTNAME = "Neuton-Regular.ttf"
+#MENU_FONTNAME = "IndieFlower.ttf"
+#MENU_FONTNAME = "Salsa-Regular.ttf"
+#MENU_FONTNAME = "GoudyBookletter1911.ttf"
+#MENU_FONTNAME = "Neuton-ExtraBold.ttf"
 
 
 # Grootte van de tiles in een level.

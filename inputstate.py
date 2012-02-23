@@ -17,12 +17,12 @@ class InputState(object):
 		self.movementState["left"] = False
 		self.movementState["up"] = False
 		
-	def update(self):
-		"""Update de state.
+	def handleInput(self, events):
+		"""Input afhandelen.
 		"""
 
 		# Ga alle pygame events bij langs.
-		for event in pygame.event.get():
+		for event in events:
 			
 			# Toets ingedrukt.
 			if event.type == pygame.KEYDOWN:

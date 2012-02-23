@@ -17,7 +17,9 @@ class Game(object):
 		in bijgehouden. Met 'run()' kan je de main loop starten.
 	"""
 	
-	def __init__(self):
+	def __init__(self, screen, gui):
+		self.screen = screen
+		self.gui = gui
 
 		# Maak level aan.
 		self.level = Level()
@@ -31,49 +33,33 @@ class Game(object):
 		self.player = Player(self.level, playerRect)
 		self.level.setPlayer(self.player)
 
-		# Maak het scherm aan.
-		if "-windowed" in sys.argv:
-			flags = 0
-		else:
-			flags = pygame.FULLSCREEN
-		self.screen = pygame.display.set_mode((800, 600), flags)
-	
-		# Maak Clock object aan.
-		self.clock = pygame.time.Clock()
-	
 		# Maak een camera object aan.
 		self.camera = Camera(self)
+
+	def handleInput(self, events):
+		"""Input afhandelen.
+			Dit sturen we allemaal rechtstreeks door naar de input state.
+		"""
+		inputState.handleInput(events)
+		
 	
-	def run(self):
-		"""Start de main loop van het spel.
+	def update(self):
+		"""Update het spel/level.
 		"""
 		
-		# Start de main loop.
-		while True:
-			
-			# Update de input state.
-			#
-			# Dit checkt of er keys zijn ingedrukt of losgelaten.
-			#
-			inputState.update()
-			
-			# Update alle actors in het level.
-			gameObjectsToUpdate = self.level.getActorList()
-			gameObjectsToUpdate.append(self.player)
-			for gameObject in gameObjectsToUpdate:
-				gameObject.update()
-			
-			# Update de camera omdat de positie van de player veranderd kan zijn.
-			self.camera.update()
-					
-			# Teken het level opnieuw.
-			self.camera.draw()
-			
-			# Wissel de buffers.
-			pygame.display.flip()
-			
-			# Time delay.
-			self.clock.tick(settings.MAX_FPS)
+		# Update alle game objects (Actors).
+		gameObjectsToUpdate = self.level.getActorList()
+		gameObjectsToUpdate.append(self.player)
+		for gameObject in gameObjectsToUpdate:
+			gameObject.update()
+		
+		# Update de camera.
+		self.camera.update()
+	
+	def draw(self):
+		"""Tekenen.
+		"""
+		self.camera.draw()
 			
 	def getScreen(self):
 		"""Return het screen object.
@@ -88,5 +74,5 @@ class Game(object):
 	def getClock(self):
 		"""Return de clock.
 		"""
-		return self.clock
+		return self.gui.getClock()
 			
